@@ -20,10 +20,10 @@ export const router = createBrowserRouter([
 		Component: CreateConsent,
 	},
 ]);
-console.log(import.meta.env)
+
 if (import.meta.env.DEV) {
-	const { setupWorker } = await import('msw/browser')
-	
+	const { setupWorker } = await import("msw/browser");
+
 	const { handlers } = await import("./api");
 	const worker = setupWorker(...handlers);
 

@@ -7,8 +7,12 @@ export function Navigation({ children }: PropsWithChildren) {
 	return (
 		<ViewContainer>
 			<NavigationContainer>
-				<NavLink to="/give-consent"><InputLabel>Give consent</InputLabel></NavLink>
-				<NavLink to="/consents">Collected consents</NavLink>
+				<NavLink to="/give-consent">
+					<InputLabel>Give consent</InputLabel>
+				</NavLink>
+				<NavLink to="/consents">
+					<InputLabel>Collected consents</InputLabel>
+				</NavLink>
 			</NavigationContainer>
 			<MainContainer>{children}</MainContainer>
 		</ViewContainer>

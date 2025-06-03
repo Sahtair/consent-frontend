@@ -50,67 +50,65 @@ export function CreateConsent() {
 
 	return (
 		<Navigation>
-				<Form method="post" onSubmit={handleSubmit}>
-					<TextField
-						id="name"
-						name="name"
-						label="Name"
-						variant="outlined"
-						required
-						onChange={handleChange}
+			<Form method="post" onSubmit={handleSubmit}>
+				<TextField
+					id="name"
+					name="name"
+					label="Name"
+					variant="outlined"
+					required
+					onChange={handleChange}
+				/>
+				<TextField
+					id="email"
+					name="email"
+					label="Email"
+					variant="outlined"
+					required
+					onChange={handleChange}
+				/>
+				<FormGroup style={{ border: "1px solid lightgray", padding: "1rem" }}>
+					<FormLabel>I agree to:</FormLabel>
+					{consentError && <FormHelperText>Select at least one</FormHelperText>}
+					<FormControlLabel
+						control={
+							<Checkbox
+								id="newsletter"
+								name="newsletter"
+								onChange={handleChange}
+							/>
+						}
+						label={"Recieve newsletter"}
 					/>
-					<TextField
-						id="email"
-						name="email"
-						label="Email"
-						variant="outlined"
-						required
-						onChange={handleChange}
+					<FormControlLabel
+						control={
+							<Checkbox
+								id="targetedAds"
+								name="targetedAds"
+								onChange={handleChange}
+							/>
+						}
+						label={"Be shown targeted ads"}
 					/>
-					<FormGroup style={{border: '1px solid lightgray', padding: '1rem'}}>
-						<FormLabel>I agree to:</FormLabel>
-						{consentError && (
-							<FormHelperText>Select at least one</FormHelperText>
-						)}
-						<FormControlLabel
-							control={
-								<Checkbox
-									id="newsletter"
-									name="newsletter"
-									onChange={handleChange}
-								/>
-							}
-							label={"Recieve newsletter"}
-						/>
-						<FormControlLabel
-							control={
-								<Checkbox
-									id="targetedAds"
-									name="targetedAds"
-									onChange={handleChange}
-								/>
-							}
-							label={"Be shown targeted ads"}
-						/>
-						<FormControlLabel
-							control={
-								<Checkbox
-									id="statistics"
-									name="statistics"
-									onChange={handleChange}
-								/>
-							}
-							label={"Contribute to anonymous visit statistics"}
-						/>
-					</FormGroup>
-					<Button
-						disabled={consentError || textError}
-						type="submit"
-						variant="contained"
-					>
-						Give consent
-					</Button>
-				</Form>
+					<FormControlLabel
+						control={
+							<Checkbox
+								id="statistics"
+								name="statistics"
+								onChange={handleChange}
+							/>
+						}
+						label={"Contribute to anonymous visit statistics"}
+					/>
+				</FormGroup>
+				<Button
+					disabled={consentError || textError}
+					type="submit"
+					variant="contained"
+				>
+					Give consent
+				</Button>
+			</Form>
 		</Navigation>
 	);
 }

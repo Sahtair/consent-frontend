@@ -25,7 +25,7 @@ function createConsentText(
 		consentString.push("Be shown targeted ads");
 	}
 	if (consents.statistics) {
-		consentString.push('Statistics')
+		consentString.push("Statistics");
 	}
 
 	return consentString.join(", ");
