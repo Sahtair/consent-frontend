@@ -1,34 +1,19 @@
 import styled from "@emotion/styled";
 import { InputLabel } from "@mui/material";
-import type { PropsWithChildren } from "react";
 import { NavLink } from "react-router";
 
-export function Navigation({ children }: PropsWithChildren) {
+export function Navigation() {
 	return (
-		<ViewContainer>
-			<NavigationContainer>
-				<NavLink to="/give-consent">
-					<InputLabel>Give consent</InputLabel>
-				</NavLink>
-				<NavLink to="/consents">
-					<InputLabel>Collected consents</InputLabel>
-				</NavLink>
-			</NavigationContainer>
-			<MainContainer>{children}</MainContainer>
-		</ViewContainer>
+		<NavigationContainer>
+			<NavLink to="/give-consent">
+				<InputLabel>Give consent</InputLabel>
+			</NavLink>
+			<NavLink to="/consents">
+				<InputLabel>Collected consents</InputLabel>
+			</NavLink>
+		</NavigationContainer>
 	);
 }
-
-const ViewContainer = styled.div`
- display: flex;
-`;
-
-const MainContainer = styled.div`
-	width: 100%;
-	padding: 1rem;
-	display: flex;
-	justify-content: center;
-`;
 
 const NavigationContainer = styled.nav`
 	padding-top: 3rem;

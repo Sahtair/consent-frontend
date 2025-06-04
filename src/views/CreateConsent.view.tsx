@@ -10,7 +10,6 @@ import {
 } from "@mui/material";
 import { type FormEvent, useEffect, useState } from "react";
 import { useNavigate } from "react-router";
-import { Navigation } from "../components/Navigation";
 
 export function CreateConsent() {
 	const navigate = useNavigate();
@@ -32,7 +31,9 @@ export function CreateConsent() {
 		});
 
 		if (response.ok) {
-			navigate("/consents");
+			navigate("/consents", {
+				state: { refetch: true },
+			});
 		} else {
 			setError("There has been an issue with creating the consent");
 		}
@@ -64,73 +65,71 @@ export function CreateConsent() {
 	const invalidForm = !name || !email || emailError || consentError;
 
 	return (
-		<Navigation>
-			<Form onSubmit={handleSubmit}>
-				<TextField
-					id="name"
-					name="name"
-					label="Name"
-					variant="outlined"
-					required
-					onChange={handleChange}
-					error={!name}
-					helperText={!name && "Name is required"}
-				/>
-				<TextField
-					id="email"
-					name="email"
-					label="Email"
-					variant="outlined"
-					required
-					onChange={handleChange}
-					error={emailError}
-					helperText={
-						emailError && "Email not valid. Valid format: hello@example.com"
+		<Form onSubmit={handleSubmit}>
+			<TextField
+				id="name"
+				name="name"
+				label="Name"
+				variant="outlined"
+				required
+				onChange={handleChange}
+				error={!name}
+				helperText={!name && "Name is required"}
+			/>
+			<TextField
+				id="email"
+				name="email"
+				label="Email"
+				variant="outlined"
+				required
+				onChange={handleChange}
+				error={emailError}
+				helperText={
+					emailError && "Email not valid. Valid format: hello@example.com"
+				}
+			/>
+			<FormGroup style={{ border: "1px solid lightgray", padding: "1rem" }}>
+				<FormLabel>I agree to:</FormLabel>
+				{consentError && (
+					<FormHelperText error>Select at least one</FormHelperText>
+				)}
+				<FormControlLabel
+					control={
+						<Checkbox
+							id="newsletter"
+							name="newsletter"
+							onChange={handleChange}
+						/>
 					}
+					label={"Recieve newsletter"}
 				/>
-				<FormGroup style={{ border: "1px solid lightgray", padding: "1rem" }}>
-					<FormLabel>I agree to:</FormLabel>
-					{consentError && (
-						<FormHelperText error>Select at least one</FormHelperText>
-					)}
-					<FormControlLabel
-						control={
-							<Checkbox
-								id="newsletter"
-								name="newsletter"
-								onChange={handleChange}
-							/>
-						}
-						label={"Recieve newsletter"}
-					/>
-					<FormControlLabel
-						control={
-							<Checkbox
-								id="targetedAds"
-								name="targetedAds"
-								onChange={handleChange}
-							/>
-						}
-						label={"Be shown targeted ads"}
-					/>
-					<FormControlLabel
-						control={
-							<Checkbox
-								id="statistics"
-								name="statistics"
-								onChange={handleChange}
-							/>
-						}
-						label={"Contribute to anonymous visit statistics"}
-					/>
-				</FormGroup>
-				{error && <FormHelperText error>{error}</FormHelperText>}
+				<FormControlLabel
+					control={
+						<Checkbox
+							id="targetedAds"
+							name="targetedAds"
+							onChange={handleChange}
+						/>
+					}
+					label={"Be shown targeted ads"}
+				/>
+				<FormControlLabel
+					control={
+						<Checkbox
+							id="statistics"
+							name="statistics"
+							onChange={handleChange}
+						/>
+					}
+					label={"Contribute to anonymous visit statistics"}
+				/>
+			</FormGroup>
+			{error && <FormHelperText error>{error}</FormHelperText>}
 
-				<Button disabled={invalidForm} type="submit" variant="contained">
-					Give consent
-				</Button>
-			</Form>
-		</Navigation>
+			<Button disabled={invalidForm} type="submit" variant="contained">
+				Give consent
+			</Button>
+		</Form>
 	);
 }
 

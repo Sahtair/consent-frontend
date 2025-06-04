@@ -11,7 +11,6 @@ import {
 	TableRow,
 } from "@mui/material";
 import type { Consents } from "../api";
-import { Navigation } from "../components/Navigation";
 import { useConsentData } from "../contexts/ConsentDataContext";
 
 function createConsentText(
@@ -36,59 +35,57 @@ export function ConsentList() {
 	const { data, isLoading, pagination, setPagination } = useConsentData();
 
 	return (
-		<Navigation>
-			<Container>
-				{isLoading && <span>Loading...</span>}
-				{!data && <span>No data</span>}
-				{!isLoading && data && (
-					<TableContainer component={Paper}>
-						<Table>
-							<TableHead>
-								<TableRow>
-									<TableCell>Name</TableCell>
-									<TableCell>Email</TableCell>
-									<TableCell>Consent given for</TableCell>
-								</TableRow>
-							</TableHead>
-							<TableBody>
-								{data.map(({ id, name, email, ...consents }) => {
-									return (
-										<TableRow key={id}>
-											<TableCell>{name}</TableCell>
-											<TableCell>{email}</TableCell>
-											<TableCell>{createConsentText(consents)}</TableCell>
-										</TableRow>
-									);
-								})}
-							</TableBody>
-							<TableFooter>
-								<TableRow>
-									<TablePagination
-										colSpan={3}
-										count={-1}
-										rowsPerPageOptions={[2, 5, 10]}
-										rowsPerPage={pagination.offset}
-										page={pagination.page}
-										onPageChange={(_event, page) => {
-											setPagination((prevPagination) => ({
-												...prevPagination,
-												page,
-											}));
-										}}
-										onRowsPerPageChange={(event) => {
-											setPagination((prevPagination) => ({
-												...prevPagination,
-												offset: Number(event.target.value),
-											}));
-										}}
-									/>
-								</TableRow>
-							</TableFooter>
-						</Table>
-					</TableContainer>
-				)}
-			</Container>
-		</Navigation>
+		<Container>
+			{isLoading && <span>Loading...</span>}
+			{!data && <span>No data</span>}
+			{!isLoading && data && (
+				<TableContainer component={Paper}>
+					<Table>
+						<TableHead>
+							<TableRow>
+								<TableCell>Name</TableCell>
+								<TableCell>Email</TableCell>
+								<TableCell>Consent given for</TableCell>
+							</TableRow>
+						</TableHead>
+						<TableBody>
+							{data.map(({ id, name, email, ...consents }) => {
+								return (
+									<TableRow key={id}>
+										<TableCell>{name}</TableCell>
+										<TableCell>{email}</TableCell>
+										<TableCell>{createConsentText(consents)}</TableCell>
+									</TableRow>
+								);
+							})}
+						</TableBody>
+						<TableFooter>
+							<TableRow>
+								<TablePagination
+									colSpan={3}
+									count={-1}
+									rowsPerPageOptions={[2, 5, 10]}
+									rowsPerPage={pagination.offset}
+									page={pagination.page}
+									onPageChange={(_event, page) => {
+										setPagination((prevPagination) => ({
+											...prevPagination,
+											page,
+										}));
+									}}
+									onRowsPerPageChange={(event) => {
+										setPagination((prevPagination) => ({
+											...prevPagination,
+											offset: Number(event.target.value),
+										}));
+									}}
+								/>
+							</TableRow>
+						</TableFooter>
+					</Table>
+				</TableContainer>
+			)}
+		</Container>
 	);
 }
 

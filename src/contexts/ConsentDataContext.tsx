@@ -5,6 +5,7 @@ import {
 	useEffect,
 	useState,
 } from "react";
+import { useLocation, useNavigate } from "react-router";
 import type { Consents } from "../api";
 
 interface Pagination {
@@ -34,6 +35,8 @@ const ConsentDataContext = createContext<ConsentDataContext>({
 export const useConsentData = () => useContext(ConsentDataContext);
 
 export function ConsentDataContextProvider({ children }: PropsWithChildren) {
+	const location = useLocation();
+	const navigate = useNavigate();
 	const [isLoading, setIsLoading] = useState(false);
 	const [isError, setIsError] = useState(false);
 	const [data, setData] = useState<Consents[]>([]);
@@ -60,10 +63,13 @@ export function ConsentDataContextProvider({ children }: PropsWithChildren) {
 			const { data } = await response.json();
 			setData(data);
 			setIsLoading(false);
+			if (location.state?.refetch) {
+				navigate(location.pathname, { replace: true });
+			}
 		}
 
 		fetchData();
-	}, [pagination]);
+	}, [pagination, location.state?.refetch, location.pathname, navigate]);
 
 	return (
 		<ConsentDataContext.Provider
