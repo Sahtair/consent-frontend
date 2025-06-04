@@ -46,11 +46,11 @@ export function CreateConsent() {
 
 	const { name, email, newsletter, targetedAds, statistics } = formState;
 	const consentError = ![newsletter, targetedAds, statistics].some(Boolean);
-	const textError = !name || !email || !email.includes("@");
+	const invalidForm = !name || !email || !email.includes("@") || consentError;
 
 	return (
 		<Navigation>
-			<Form method="post" onSubmit={handleSubmit}>
+			<Form onSubmit={handleSubmit}>
 				<TextField
 					id="name"
 					name="name"
@@ -102,7 +102,7 @@ export function CreateConsent() {
 					/>
 				</FormGroup>
 				<Button
-					disabled={consentError || textError}
+					disabled={invalidForm}
 					type="submit"
 					variant="contained"
 				>

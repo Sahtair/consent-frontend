@@ -12,6 +12,7 @@ import {
 import type { Consents } from "../api";
 import { Navigation } from "../components/Navigation";
 import { useConsentData } from "../contexts/ConsentDataContext";
+import styled from "@emotion/styled";
 
 function createConsentText(
 	consents: Pick<Consents, "newsletter" | "statistics" | "targetedAds">,
@@ -36,49 +37,57 @@ export function ConsentList() {
 
 	return (
 		<Navigation>
-			{isLoading && <span>Loading...</span>}
-			{!data && <span>No data</span>}
-			{!isLoading && data && (
-				<TableContainer component={Paper}>
-					<Table>
-						<TableHead>
-							<TableRow>
-								<TableCell>Name</TableCell>
-								<TableCell>Email</TableCell>
-								<TableCell>Consent given for</TableCell>
-							</TableRow>
-						</TableHead>
-						<TableBody>
-							{data.map(({ id, name, email, ...consents }) => {
-								return (
-									<TableRow key={id}>
-										<TableCell>{name}</TableCell>
-										<TableCell>{email}</TableCell>
-										<TableCell>{createConsentText(consents)}</TableCell>
-									</TableRow>
-								);
-							})}
-						</TableBody>
-						<TableFooter>
-							<TableRow>
-								<TablePagination
-									colSpan={3}
-									count={-1}
-									rowsPerPageOptions={[]}
-									rowsPerPage={pagination.offset}
-									page={pagination.page}
-									onPageChange={(_event, page) => {
-										setPagination((prevPagination) => ({
-											...prevPagination,
-											page,
-										}));
-									}}
-								/>
-							</TableRow>
-						</TableFooter>
-					</Table>
-				</TableContainer>
-			)}
+			<Container>
+				{isLoading && <span>Loading...</span>}
+				{!data && <span>No data</span>}
+				{!isLoading && data && (
+					<TableContainer component={Paper}>
+						<Table>
+							<TableHead>
+								<TableRow>
+									<TableCell>Name</TableCell>
+									<TableCell>Email</TableCell>
+									<TableCell>Consent given for</TableCell>
+								</TableRow>
+							</TableHead>
+							<TableBody>
+								{data.map(({ id, name, email, ...consents }) => {
+									return (
+										<TableRow key={id}>
+											<TableCell>{name}</TableCell>
+											<TableCell>{email}</TableCell>
+											<TableCell>{createConsentText(consents)}</TableCell>
+										</TableRow>
+									);
+								})}
+							</TableBody>
+							<TableFooter>
+								<TableRow>
+									<TablePagination
+										colSpan={3}
+										count={-1}
+										rowsPerPageOptions={[]}
+										rowsPerPage={pagination.offset}
+										page={pagination.page}
+										onPageChange={(_event, page) => {
+											setPagination((prevPagination) => ({
+												...prevPagination,
+												page,
+											}));
+										}}
+									/>
+								</TableRow>
+							</TableFooter>
+						</Table>
+					</TableContainer>
+				)}
+			</Container>
 		</Navigation>
 	);
 }
+
+const Container = styled.div`
+	align-content: center;
+	width: 80%;
+	min-width: 650px;
+`
