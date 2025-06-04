@@ -8,12 +8,13 @@ import {
 	FormLabel,
 	TextField,
 } from "@mui/material";
-import { type FormEvent, useState } from "react";
+import { type FormEvent, useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { Navigation } from "../components/Navigation";
 
 export function CreateConsent() {
 	const navigate = useNavigate();
+	const [error, setError] = useState("");
 	const [formState, setFormState] = useState({
 		name: "",
 		email: "",
@@ -32,8 +33,21 @@ export function CreateConsent() {
 
 		if (response.ok) {
 			navigate("/consents");
+		} else {
+			setError("There has been an issue with creating the consent");
 		}
 	};
+
+	useEffect(() => {
+		let timer: number;
+		if (error) {
+			timer = setTimeout(() => setError(""), 5000);
+		}
+
+		return () => {
+			clearTimeout(timer);
+		};
+	});
 
 	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		const value =
@@ -46,7 +60,8 @@ export function CreateConsent() {
 
 	const { name, email, newsletter, targetedAds, statistics } = formState;
 	const consentError = ![newsletter, targetedAds, statistics].some(Boolean);
-	const invalidForm = !name || !email || !email.includes("@") || consentError;
+	const emailError = !/^[\S]+@[\S]+\.[\S]+$/.test(email);
+	const invalidForm = !name || !email || emailError || consentError;
 
 	return (
 		<Navigation>
@@ -58,6 +73,8 @@ export function CreateConsent() {
 					variant="outlined"
 					required
 					onChange={handleChange}
+					error={!name}
+					helperText={!name && "Name is required"}
 				/>
 				<TextField
 					id="email"
@@ -66,10 +83,16 @@ export function CreateConsent() {
 					variant="outlined"
 					required
 					onChange={handleChange}
+					error={emailError}
+					helperText={
+						emailError && "Email not valid. Valid format: hello@example.com"
+					}
 				/>
 				<FormGroup style={{ border: "1px solid lightgray", padding: "1rem" }}>
 					<FormLabel>I agree to:</FormLabel>
-					{consentError && <FormHelperText>Select at least one</FormHelperText>}
+					{consentError && (
+						<FormHelperText error>Select at least one</FormHelperText>
+					)}
 					<FormControlLabel
 						control={
 							<Checkbox
@@ -101,11 +124,9 @@ export function CreateConsent() {
 						label={"Contribute to anonymous visit statistics"}
 					/>
 				</FormGroup>
-				<Button
-					disabled={invalidForm}
-					type="submit"
-					variant="contained"
-				>
+				{error && <FormHelperText error>{error}</FormHelperText>}
+
+				<Button disabled={invalidForm} type="submit" variant="contained">
 					Give consent
 				</Button>
 			</Form>

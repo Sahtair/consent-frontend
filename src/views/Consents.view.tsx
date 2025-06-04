@@ -66,13 +66,19 @@ export function ConsentList() {
 									<TablePagination
 										colSpan={3}
 										count={-1}
-										rowsPerPageOptions={[]}
+										rowsPerPageOptions={[2, 5, 10]}
 										rowsPerPage={pagination.offset}
 										page={pagination.page}
 										onPageChange={(_event, page) => {
 											setPagination((prevPagination) => ({
 												...prevPagination,
 												page,
+											}));
+										}}
+										onRowsPerPageChange={(event) => {
+											setPagination((prevPagination) => ({
+												...prevPagination,
+												offset: Number(event.target.value),
 											}));
 										}}
 									/>
@@ -90,4 +96,4 @@ const Container = styled.div`
 	align-content: center;
 	width: 80%;
 	min-width: 650px;
-`
+`;
