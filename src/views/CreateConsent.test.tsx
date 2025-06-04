@@ -1,9 +1,9 @@
-import { describe, it, expect } from "vitest";
 import { render, screen } from "@testing-library/react";
-import { CreateConsent } from "./CreateConsent.view";
-import { MemoryRouter } from "react-router";
 import { userEvent } from "@testing-library/user-event";
 import type { PropsWithChildren } from "react";
+import { MemoryRouter } from "react-router";
+import { describe, expect, it } from "vitest";
+import { CreateConsent } from "./CreateConsent.view";
 
 function RenderWrapper({ children }: PropsWithChildren) {
 	return <MemoryRouter>{children}</MemoryRouter>;

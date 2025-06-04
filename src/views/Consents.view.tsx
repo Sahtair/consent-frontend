@@ -1,3 +1,4 @@
+import styled from "@emotion/styled";
 import {
 	Paper,
 	Table,
@@ -12,7 +13,6 @@ import {
 import type { Consents } from "../api";
 import { Navigation } from "../components/Navigation";
 import { useConsentData } from "../contexts/ConsentDataContext";
-import styled from "@emotion/styled";
 
 function createConsentText(
 	consents: Pick<Consents, "newsletter" | "statistics" | "targetedAds">,

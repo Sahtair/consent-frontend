@@ -11,3 +11,7 @@ To run the application install dependancies with `pnpm install` and then run wit
 ### Testing
 
 As mentioned above I used vitest and react testing library. To run the tests run `pnpm test`.
+
+### Linting
+
+Using biome to lint, format and check the code. For linting use command `pnpm lint`, formatting `pnpm format` and check with `pnpm check`. All these commands also have an auto fix feature by adding `:fix` at the end of the command.
